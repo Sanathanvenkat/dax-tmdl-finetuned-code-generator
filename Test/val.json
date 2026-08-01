@@ -1,0 +1,38 @@
+[
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy cube SQL metric with a filter condition into a Power BI DAX measure.",
+    "input": "SELECT COUNT(DISTINCT customer_id)\nFROM fact_sales\nWHERE customer_segment = 'Premium'",
+    "output": "Premium Customer Count = \nCALCULATE(\n    DISTINCTCOUNT(fact_sales[customer_id]),\n    fact_sales[customer_segment] = \"Premium\"\n)"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: DIM_STORE\nAttributes: store_id (PK), store_name, store_sqft, city, state",
+    "output": "table DIM_STORE\n    column store_id\n        dataType: int64\n        isKey: true\n\n    column store_name\n        dataType: string\n\n    column store_sqft\n        dataType: int64\n\n    column city\n        dataType: string\n\n    column state\n        dataType: string"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Payroll Cost YTD\nExpression: SUM(gross_pay) year-to-date based on pay_period",
+    "output": "Payroll Cost YTD = \nTOTALYTD(\n    SUM(fact_payroll[gross_pay]),\n    DIM_DATE[date]\n)"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Employee Attrition Rate\nExpression: COUNT(DISTINCT terminated_employee_id) / COUNT(DISTINCT employee_id)",
+    "output": "Employee Attrition Rate = \nDIVIDE(\n    DISTINCTCOUNT(fact_terminations[employee_id]),\n    DISTINCTCOUNT(dim_employee[employee_id])\n)"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_sales.product_id -> DIM_PRODUCT.product_id (many-to-one)",
+    "output": "relationship fact_sales_to_product\n    fromColumn: fact_sales.product_id\n    toColumn: DIM_PRODUCT.product_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT AVG(fact_shipments.delivery_days) AS avg_delivery_days\nFROM fact_shipments",
+    "output": "Avg Delivery Days = AVERAGE(fact_shipments[delivery_days])"
+  }
+]

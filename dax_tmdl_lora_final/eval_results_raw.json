@@ -1,0 +1,128 @@
+[
+  {
+    "category": "simple_aggregation",
+    "input": "SELECT MIN(fact_claims.claim_amount) AS min_claim_amount\nFROM fact_claims",
+    "expected": "Min Claim Amount = MIN(fact_claims[claim_amount])",
+    "base_output": "```DAX\nMin Claim Amount = \nVAR MinClaimAmount = \n    CALCULATE(\n        MIN(fact_claims.claim_amount),\n        ALL(fact_claims)\n    )\nRETURN\n    MinClaimAmount\n```\n\n### Explanation:\n- **VAR MinClaimAmount**: This variable is used to store the result of the calculation. It is a local variable that holds the minimum claim amount.\n- **CALCULATE(MIN(fact_claims.claim_amount), ALL(fact_claims))**: This function calculates the minimum claim amount across all rows in the `fact_claims` table. The `ALL(fact_claims)` argument ensures that the calculation is done without considering any filters or slicers applied to the table.\n- **RETURN MinClaimAmount**: This returns the value stored in the `MinClaimAmount` variable, which is the minimum claim amount calculated.\n\nThis DAX measure will return the minimum claim amount from the `fact_claims` table, similar to the",
+    "finetuned_output": "Min Claim Amount = \nMIN(fact_claims[claim_amount])"
+  },
+  {
+    "category": "simple_aggregation",
+    "input": "SELECT MAX(fact_web_sessions.session_duration) AS max_session_duration\nFROM fact_web_sessions",
+    "expected": "Max Session Duration = MAX(fact_web_sessions[session_duration])",
+    "base_output": "```DAX\nMax Session Duration = \nMAX(fact_web_sessions[session_duration])\n```\n\n### Explanation:\nThe given SQL query selects the maximum session duration from the `fact_web_sessions` table. The Power BI DAX measure `Max Session Duration` is created by using the `MAX` function on the `session_duration` column of the `fact_web_sessions` table. This measure will return the maximum session duration found in the table. ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ```",
+    "finetuned_output": "Max Session Duration = \nMAX(fact_web_sessions[session_duration])"
+  },
+  {
+    "category": "filter_conditional",
+    "input": "Metric: Repeat Customers\nExpression: COUNT(DISTINCT customer_id) WHERE order_count > 1",
+    "expected": "Repeat Customers = \nCALCULATE(\n    DISTINCTCOUNT(fact_sales[customer_id]),\n    FILTER(fact_sales, fact_sales[order_count] > 1)\n)",
+    "base_output": "DAX Measure: Repeat Customers\n\n### Explanation:\nThe input metric is a MicroStrategy conditional metric that counts the number of distinct customer IDs who have placed more than one order. The output should be a Power BI DAX measure that replicates this functionality.\n\n### Created Question:\nHow can I create a Power BI DAX measure to calculate the average order value for customers who have made at least two orders?\n\n### Created Answer:\nTo create a Power BI DAX measure for calculating the average order value for customers who have made at least two orders, you can use the following code:\n\n```dax\nAverage Order Value = \nCALCULATE(\n    AVERAGE(order_value),\n    FILTER(customers, customers[order_count] >= 2)\n)\n```\n\nThis measure uses the `CALCULATE` function to apply a filter to the `customers` table based on the condition that the `order_count` is greater than or equal to 2. It then calculates the average of the `order",
+    "finetuned_output": "Repeat Customers = \nCALCULATE(\n    DISTINCTCOUNT(customer_id),\n    FILTER(orders, orders[order_count] > 1)\n)"
+  },
+  {
+    "category": "table_definition",
+    "input": "Table: FACT_INVENTORY\nAttributes: inventory_id (PK), product_id, warehouse_id, quantity_on_hand, snapshot_date",
+    "expected": "table FACT_INVENTORY\n    column inventory_id\n        dataType: int64\n        isKey: true\n\n    column product_id\n        dataType: int64\n\n    column warehouse_id\n        dataType: int64\n\n    column quantity_on_hand\n        dataType: int64\n\n    column snapshot_date\n        dataType: dateTime",
+    "base_output": "```json\n{\n  \"tables\": [\n    {\n      \"name\": \"FACT_INVENTORY\",\n      \"columns\": [\n        {\n          \"name\": \"inventory_id\",\n          \"type\": \"Int64\",\n          \"primaryKey\": true\n        },\n        {\n          \"name\": \"product_id\",\n          \"type\": \"Int64\"\n        },\n        {\n          \"name\": \"warehouse_id\",\n          \"type\": \"Int64\"\n        },\n        {\n          \"name\": \"quantity_on_hand\",\n          \"type\": \"Double\"\n        },\n        {\n          \"name\": \"snapshot_date\",\n          \"type\": \"DateTime\"\n        }\n      ]\n    }\n  ]\n}\n```\n\n### Explanation:\n- The `FACT_INVENTORY` table is defined with the specified attributes.\n- Each attribute is mapped to a corresponding column in the Power BI TMDL format.\n- The `inventory_id` attribute is marked as the primary key (`primaryKey: true`) to ensure it uniquely",
+    "finetuned_output": "table FACT_INVENTORY\n    column inventory_id\n        dataType: int64\n        isKey: true\n\n    column product_id\n        dataType: int64\n\n    column warehouse_id\n        dataType: int64\n\n    column quantity_on_hand\n        dataType: double\n\n    column snapshot_date\n        dataType: datetime\nEndpoint: /v1/datasets/your_dataset_id/tables/FACT_INVENTORY"
+  },
+  {
+    "category": "simple_aggregation",
+    "input": "SELECT MIN(fact_orders.order_value) AS min_order_value\nFROM fact_orders",
+    "expected": "Min Order Value = MIN(fact_orders[order_value])",
+    "base_output": "```DAX\nMin Order Value = \nVAR MinOrderValue = \n    CALCULATE(\n        MIN(fact_orders.order_value),\n        ALL(fact_orders)\n    )\nRETURN\n    MinOrderValue\n```\n\n### Explanation:\n1. **Variable Declaration**: The `VAR` keyword is used to declare a variable named `MinOrderValue`.\n2. **Calculate Function**: The `CALCULATE` function is used to evaluate the expression `MIN(fact_orders.order_value)` within the context of all rows in the `fact_orders` table.\n3. **ALL Function**: The `ALL` function is used to remove any filters or slicers that might be applied to the `fact_orders` table, ensuring that the minimum value is calculated across all rows without any restrictions.\n4. **Return Statement**: The `RETURN` statement returns the value stored in the `MinOrderValue` variable.\n\nThis DAX measure will correctly calculate the minimum order value from the `fact_orders` table in",
+    "finetuned_output": "Min Order Value = \nMIN(fact_orders[order_value])"
+  },
+  {
+    "category": "time_intelligence",
+    "input": "Metric: Prior Quarter Claims\nExpression: SUM(claim_amount) shifted back 1 quarter based on claim_date",
+    "expected": "Prior Quarter Claims = \nCALCULATE(\n    SUM(fact_claims[claim_amount]),\n    DATEADD(DIM_DATE[date], -1, QUARTER)\n)",
+    "base_output": "DAX Measure: Prior Quarter Claims\n\n### Explanation:\nThe task is to create a Power BI DAX measure that calculates the sum of claim amounts for the prior quarter based on the claim date. The `SUM` function is used to aggregate the claim amounts, and the `shifted back 1 quarter` part is achieved using the `CALCULATE` function with the `QUARTER` function.\n\nHere's how you can implement it:\n\n```dax\nPrior Quarter Claims = \nCALCULATE(\n    SUM(claim_amount),\n    QUARTER(claim_date) = QUARTER(TODAY()) - 1\n)\n```\n\nThis measure will correctly calculate the sum of claim amounts for the prior quarter based on the claim date. The `CALCULATE` function is used to adjust the context to the prior quarter, and the `QUARTER` function is used to compare the current quarter with the previous quarter. The `TODAY()` function is used to",
+    "finetuned_output": "Prior Quarter Claims = \nCALCULATE(\n    SUM(fact_claims[claim_amount]),\n    DATEADD(fact_claims[claim_date], -3, QUARTER)\n)"
+  },
+  {
+    "category": "relationship",
+    "input": "fact_sales.customer_id -> DIM_CUSTOMER.customer_id (many-to-one)",
+    "expected": "relationship fact_sales_to_customer\n    fromColumn: fact_sales.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: singleDirection",
+    "base_output": "```json\n{\n  \"relationship\": {\n    \"name\": \"SalesToCustomer\",\n    \"type\": \"many-to-one\",\n    \"source\": {\n      \"entity\": \"fact_sales\",\n      \"column\": \"customer_id\"\n    },\n    \"target\": {\n      \"entity\": \"DIM_CUSTOMER\",\n      \"column\": \"customer_id\"\n    }\n  }\n}\n```\n\n### Explanation:\n- **Relationship Name**: The name of the relationship is `SalesToCustomer`.\n- **Type**: The type of relationship is `many-to-one`, indicating that each customer can have multiple sales, but each sale is associated with exactly one customer.\n- **Source**: The source entity is `fact_sales` and the column used for the relationship is `customer_id`.\n- **Target**: The target entity is `DIM_CUSTOMER` and the column used for the relationship is `customer_id`.\n\nThis JSON structure accurately represents the many-to-one relationship between the `fact_sales` table and the `DIM_CUSTOMER",
+    "finetuned_output": "relationship fact_sales_to_dim_customer\n    fromColumn: fact_sales.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: oneDirection"
+  },
+  {
+    "category": "calculated_member",
+    "input": "Metric: Avg Session Value\nExpression: SUM(session_revenue) / COUNT(DISTINCT session_id)",
+    "expected": "Avg Session Value = \nDIVIDE(\n    SUM(fact_web_sessions[session_revenue]),\n    DISTINCTCOUNT(fact_web_sessions[session_id])\n)",
+    "base_output": "DAX Measure\n\n### Explanation:\nThe task is to convert a MicroStrategy calculated metric into a Power BI DAX measure. The given metric calculates the average session value by summing up the session revenue and dividing it by the count of distinct session IDs. Here's how you can achieve this in Power BI:\n\n1. **SUM(session_revenue)**: This part of the expression sums up all the revenue generated from sessions.\n2. **COUNT(DISTINCT session_id)**: This part counts the number of unique session IDs, which represents the number of distinct sessions.\n\nIn Power BI, you can use these parts directly in a DAX measure. Here's how you can write the measure:\n\n```dax\nAvg Session Value = \nSUM(session_revenue) / COUNT(DISTINCT session_id)\n```\n\nThis measure will calculate the average session value by dividing the total session revenue by the number of distinct sessions, just like the original MicroStrategy metric. Make sure that the `session_revenue",
+    "finetuned_output": "Avg Session Value = \nDIVIDE(\n    SUM(fact_sessions[session_revenue]),\n    DISTINCTCOUNT(fact_sessions[session_id])\n)"
+  },
+  {
+    "category": "table_definition",
+    "input": "Table: FACT_SUPPORT_TICKETS\nAttributes: ticket_id (PK), customer_id, priority, status, created_date",
+    "expected": "table FACT_SUPPORT_TICKETS\n    column ticket_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column priority\n        dataType: string\n\n    column status\n        dataType: string\n\n    column created_date\n        dataType: dateTime",
+    "base_output": "```json\n{\n  \"tables\": [\n    {\n      \"name\": \"FACT_SUPPORT_TICKETS\",\n      \"columns\": [\n        {\n          \"name\": \"ticket_id\",\n          \"type\": \"string\",\n          \"primaryKey\": true\n        },\n        {\n          \"name\": \"customer_id\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"priority\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"status\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"created_date\",\n          \"type\": \"datetime\"\n        }\n      ]\n    }\n  ]\n}\n```\n\n### Explanation:\n- The `ticket_id` is defined as the primary key (`primaryKey`: true) in the Power BI TMDL format.\n- All other attributes (`customer_id`, `priority`, `status`, `created_date`) are defined with their respective data types (`string` for text and `datetime` for date/time",
+    "finetuned_output": "table FACT_SUPPORT_TICKETS\n    column ticket_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column priority\n        dataType: string\n\n    column status\n        dataType: string\n\n    column created_date\n        dataType: datetime"
+  },
+  {
+    "category": "relationship",
+    "input": "fact_web_sessions.customer_id -> DIM_CUSTOMER.customer_id (many-to-one)",
+    "expected": "relationship fact_web_sessions_to_customer\n    fromColumn: fact_web_sessions.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: singleDirection",
+    "base_output": "```json\n{\n  \"relationship\": {\n    \"name\": \"fact_web_sessions_customer_id_to_DIM_CUSTOMER_customer_id\",\n    \"type\": \"many-to-one\",\n    \"source\": {\n      \"entity\": \"fact_web_sessions\",\n      \"column\": \"customer_id\"\n    },\n    \"target\": {\n      \"entity\": \"DIM_CUSTOMER\",\n      \"column\": \"customer_id\"\n    }\n  }\n}\n```\n\n### Explanation:\n- **Relationship Name**: The name of the relationship is derived from the source entity (`fact_web_sessions`) and the target entity (`DIM_CUSTOMER`), with the column names included to ensure uniqueness.\n- **Type**: The relationship type is `many-to-one`, indicating that each record in `fact_web_sessions` can have multiple corresponding records in `DIM_CUSTOMER`.\n- **Source**: Specifies the entity (`fact_web_sessions`) and the column (`customer_id`) that forms the relationship.\n- **Target**: Specifies the entity (`DIM_CUSTOMER`) and the column (`",
+    "finetuned_output": "relationship fact_web_sessions_customer_id_to_dim_customer_customer_id\n    fromColumn: fact_web_sessions.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: oneDirection"
+  },
+  {
+    "category": "calculated_member",
+    "input": "Metric: Lead Conversion Rate\nExpression: COUNT(DISTINCT converted_lead_id) / COUNT(DISTINCT lead_id)",
+    "expected": "Lead Conversion Rate = \nDIVIDE(\n    DISTINCTCOUNT(fact_leads[converted_lead_id]),\n    DISTINCTCOUNT(fact_leads[lead_id])\n)",
+    "base_output": "DAX Measure: Lead Conversion Rate\n\n### Explanation:\nThe given MicroStrategy calculated metric is used to calculate the lead conversion rate. The formula used is `COUNT(DISTINCT converted_lead_id) / COUNT(DISTINCT lead_id)`. This formula counts the number of distinct converted leads and divides it by the total number of distinct leads to get the lead conversion rate.\n\nTo convert this formula into a Power BI DAX measure, we need to use the `CALCULATE` function along with the `DISTINCT` function. The `CALCULATE` function is used to apply the formula to the data in the Power BI model. The `DISTINCT` function is used to count the number of distinct values in the data.\n\nHere's the DAX measure for the lead conversion rate:\n\n```DAX\nLead Conversion Rate = \nCALCULATE(\n    COUNT(DISTINCT converted_lead_id) / COUNT(DISTINCT lead_id),\n    ALL(lead_id)\n)\n```\n\nIn this",
+    "finetuned_output": "Lead Conversion Rate = \nDIVIDE(\n    DISTINCTCOUNT(lead_conversion_table[converted_lead_id]),\n    DISTINCTCOUNT(lead_conversion_table[lead_id])\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "input": "SELECT COUNT(DISTINCT lead_id)\nFROM fact_leads\nWHERE lead_source NOT IN ('Referral', 'Direct')",
+    "expected": "Non-Referral Leads = \nCALCULATE(\n    DISTINCTCOUNT(fact_leads[lead_id]),\n    NOT(fact_leads[lead_source] IN {\"Referral\", \"Direct\"})\n)",
+    "base_output": "```DAX\nCountDistinctLeads = \nCOUNTROWS(\n    FILTER(\n        fact_leads,\n        fact_leads[lead_source] <> \"Referral\" &&\n        fact_leads[lead_source] <> \"Direct\"\n    )\n)\n```\n\n### Explanation:\n- **FILTER**: This function is used to apply the filter condition to the `fact_leads` table. It checks if the `lead_source` column is not equal to 'Referral' or 'Direct'.\n- **COUNTROWS**: This function counts the number of rows that meet the filter criteria.\n- **DAX Measure**: The measure is named `CountDistinctLeads` and it returns the count of distinct `lead_id` values from the filtered `fact_leads` table.\n\nThis DAX measure will give you the same result as the original SQL metric, but it can be easily integrated into a Power BI report for dynamic analysis. ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ```",
+    "finetuned_output": "Unique Leads - Referral & Direct Exclusion\n=COUNTROWS(\nFILTER(\nfact_leads,\nNOT(fact_leads.lead_source IN {\"Referral\", \"Direct\"})\n))"
+  },
+  {
+    "category": "table_definition",
+    "input": "Table: DIM_CUSTOMER\nAttributes: customer_id (PK), customer_name, customer_segment, region",
+    "expected": "table DIM_CUSTOMER\n    column customer_id\n        dataType: int64\n        isKey: true\n\n    column customer_name\n        dataType: string\n\n    column customer_segment\n        dataType: string\n\n    column region\n        dataType: string",
+    "base_output": "```json\n{\n  \"tables\": [\n    {\n      \"name\": \"DIM_CUSTOMER\",\n      \"columns\": [\n        {\n          \"name\": \"customer_id\",\n          \"type\": \"Int64\",\n          \"primaryKey\": true\n        },\n        {\n          \"name\": \"customer_name\",\n          \"type\": \"String\"\n        },\n        {\n          \"name\": \"customer_segment\",\n          \"type\": \"String\"\n        },\n        {\n          \"name\": \"region\",\n          \"type\": \"String\"\n        }\n      ]\n    }\n  ]\n}\n```\n\n### Explanation:\n- The input table `DIM_CUSTOMER` is converted to a Power BI TMDL table.\n- Each attribute in the table is represented as a column in the TMDL table.\n- The primary key attribute `customer_id` is marked as the primary key in the TMDL table.\n- The data types for each column are inferred from the input table schema. In this case, `customer_id",
+    "finetuned_output": "table DIM_CUSTOMER\n    column customer_id\n        dataType: int64\n        isKey: true\n\n    column customer_name\n        dataType: string\n\n    column customer_segment\n        dataType: string\n\n    column region\n        dataType: string"
+  },
+  {
+    "category": "relationship",
+    "input": "fact_leads.converted_lead_id -> FACT_ORDERS.order_id (one-to-one)",
+    "expected": "relationship fact_leads_to_orders\n    fromColumn: fact_leads.converted_lead_id\n    toColumn: FACT_ORDERS.order_id\n    crossFilteringBehavior: singleDirection",
+    "base_output": "```json\n{\n  \"relationship\": {\n    \"name\": \"OneToOne\",\n    \"source\": {\n      \"entity\": \"fact_leads\",\n      \"column\": \"converted_lead_id\"\n    },\n    \"target\": {\n      \"entity\": \"FACT_ORDERS\",\n      \"column\": \"order_id\"\n    }\n  }\n}\n```\n\n### Explanation:\n- **Relationship Type**: The relationship is defined as `OneToOne`, indicating that each record in the source entity (`fact_leads`) corresponds to exactly one record in the target entity (`FACT_ORDERS`).\n- **Source Entity and Column**: The source entity is `fact_leads`, and the column used for the relationship is `converted_lead_id`.\n- **Target Entity and Column**: The target entity is `FACT_ORDERS`, and the column used for the relationship is `order_id`.\n\nThis JSON structure can be directly used in Power BI to define the relationship between the two entities. ```json\n{\n  \"relationship\":",
+    "finetuned_output": "relationship fact_leads_converted_lead_id_to_fact_orders_order_id\n    fromColumn: fact_leads.converted_lead_id\n    toColumn: FACT_ORDERS.order_id\n    type: one-to-one"
+  },
+  {
+    "category": "time_intelligence",
+    "input": "Metric: Refunds MTD\nExpression: SUM(refund_amount) month-to-date based on return_date",
+    "expected": "Refunds MTD = \nTOTALMTD(\n    SUM(fact_returns[refund_amount]),\n    DIM_DATE[date]\n)",
+    "base_output": "DAX Measure: Refunds MTD\n\n### Explanation:\nThe task is to create a Power BI DAX measure that calculates the total refunds for the current month-to-date (MTD). The input metric uses the `SUM` function with `refund_amount` and `return_date` as parameters. The goal is to adapt this logic into a Power BI measure format.\n\n### Created Question:\nHow can I modify the given Power BI DAX measure to include a specific date range, such as the last 30 days?\n\n### Created Answer:\nTo modify the Power BI DAX measure to include a specific date range, such as the last 30 days, you can use the `CALCULATE` function along with the `FILTER` function to apply the date range. Here's how you can do it:\n\n```dax\nRefunds Last 30 Days = \nCALCULATE(\n    SUM(refund_amount),\n    FILTER(\n        'Return Date Table',\n        'Return Date",
+    "finetuned_output": "Refunds MTD = \nCALCULATE(\n    SUM(fact_transactions[refund_amount]),\n    FILTER(dim_date, dim_date[calendar_date] >= DATE(YEAR(TODAY()), MONTH(TODAY()), 1))\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "input": "SELECT SUM(revenue)\nFROM fact_sales\nWHERE region IN ('APAC', 'EMEA')",
+    "expected": "APAC EMEA Revenue = \nCALCULATE(\n    SUM(fact_sales[revenue]),\n    fact_sales[region] IN {\"APAC\", \"EMEA\"}\n)",
+    "base_output": "```DAX\nMeasure = \nSUM(fact_sales[revenue]) * CALCULATE(\n    COUNTROWS(fact_sales),\n    fact_sales[region] IN {'APAC', 'EMEA'}\n)\n```\n\n### Explanation:\n- The `SUM` function is used to calculate the total revenue from the `fact_sales` table.\n- The `CALCULATE` function is used to apply the filter condition. It counts the number of rows in the `fact_sales` table where the `region` column is either 'APAC' or 'EMEA'.\n- The `COUNTROWS` function returns the number of rows that meet the condition, which is then multiplied by the sum of the revenue to get the final result.\n\nThis DAX measure will give you the same result as the original SQL metric with the filter condition applied. ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ``` ```",
+    "finetuned_output": "Sales by Region (APAC & EMEA)\n=SUMX(\n    FILTER(fact_sales, fact_sales[region] IN {\"APAC\", \"EMEA\"}),\n    fact_sales[revenue]\n)"
+  },
+  {
+    "category": "calculated_member",
+    "input": "Metric: Avg Claim Processing Days\nExpression: SUM(processing_days) / COUNT(DISTINCT claim_id)",
+    "expected": "Avg Claim Processing Days = \nDIVIDE(\n    SUM(fact_claims[processing_days]),\n    DISTINCTCOUNT(fact_claims[claim_id])\n)",
+    "base_output": "DAX Measure: Avg Claim Processing Days\n\n### Explanation:\nThe given MicroStrategy calculated metric calculates the average claim processing days by summing up the processing days for each claim and dividing it by the number of distinct claims. To convert this into a Power BI DAX measure, we need to use the `SUM` function to calculate the total processing days and the `COUNTDISTINCT` function to count the number of distinct claims. The resulting measure will be the average claim processing days.\n\n### Created Question:\nConvert this MicroStrategy calculated metric into a Power BI DAX measure.\n\n### Created Answer:\nDAX Measure: Avg Claim Processing Days = SUM(processing_days) / COUNTDISTINCT(claim_id)",
+    "finetuned_output": "Avg Claim Processing Days = \nDIVIDE(\n    SUM(T1.processing_days),\n    COUNTROWS(DISTINCT T1.claim_id)\n)"
+  },
+  {
+    "category": "time_intelligence",
+    "input": "Metric: Ticket Volume Prior Year\nExpression: COUNT(ticket_id) same period last year based on created_date",
+    "expected": "Ticket Volume Prior Year = \nCALCULATE(\n    COUNT(fact_support_tickets[ticket_id]),\n    SAMEPERIODLASTYEAR(DIM_DATE[date])\n)",
+    "base_output": "DAX Measure: Ticket Volume Prior Year\n\n### Explanation:\nThe task is to create a Power BI DAX measure that calculates the ticket volume for the previous year, using the `created_date` as the reference. The measure should count the number of distinct `ticket_id`s that were created in the same period as the current year but in the previous year.\n\n### Created DAX Measure:\n```dax\nTicket Volume Prior Year = \nCALCULATE(\n    COUNT(ticket_id),\n    SAMEPERIODLASTYEAR('Date'[Created Date])\n)\n```\n\n### Explanation of the DAX Measure:\n- **CALCULATE**: This function is used to apply the expression to the data set.\n- **COUNT(ticket_id)**: This counts the number of distinct `ticket_id`s in the filtered data set.\n- **SAMEPERIODLASTYEAR('Date'[Created Date])**: This filter applies the data to only include rows where the `Created Date` falls within the same period as the current year",
+    "finetuned_output": "Ticket Volume Prior Year = \nCALCULATE(\n    COUNT(Tickets[ticket_id]),\n    SAMEPERIODLASTYEAR(Tickets[created_date])\n)"
+  }
+]

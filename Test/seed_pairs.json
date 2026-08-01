@@ -1,0 +1,295 @@
+[
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT SUM(fact_sales.revenue) AS total_revenue\nFROM fact_sales",
+    "output": "Total Revenue = SUM(fact_sales[revenue])"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT COUNT(DISTINCT fact_orders.order_id) AS order_count\nFROM fact_orders",
+    "output": "Order Count = DISTINCTCOUNT(fact_orders[order_id])"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT AVG(fact_sales.unit_price) AS avg_unit_price\nFROM fact_sales",
+    "output": "Avg Unit Price = AVERAGE(fact_sales[unit_price])"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT MAX(fact_orders.order_value) AS max_order_value\nFROM fact_orders",
+    "output": "Max Order Value = MAX(fact_orders[order_value])"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT MIN(fact_orders.order_value) AS min_order_value\nFROM fact_orders",
+    "output": "Min Order Value = MIN(fact_orders[order_value])"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT COUNT(fact_sales.transaction_id) AS transaction_count\nFROM fact_sales",
+    "output": "Transaction Count = COUNT(fact_sales[transaction_id])"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT SUM(fact_inventory.quantity_on_hand) AS total_inventory\nFROM fact_inventory",
+    "output": "Total Inventory = SUM(fact_inventory[quantity_on_hand])"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT COUNT(DISTINCT fact_sales.customer_id) AS unique_customers\nFROM fact_sales",
+    "output": "Unique Customers = DISTINCTCOUNT(fact_sales[customer_id])"
+  },
+
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Profit Margin\nExpression: (SUM(revenue) - SUM(cost)) / SUM(revenue)",
+    "output": "Profit Margin = \nDIVIDE(\n    SUM(fact_sales[revenue]) - SUM(fact_sales[cost]),\n    SUM(fact_sales[revenue])\n)"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Avg Order Value\nExpression: SUM(revenue) / COUNT(DISTINCT order_id)",
+    "output": "Avg Order Value = \nDIVIDE(\n    SUM(fact_orders[revenue]),\n    DISTINCTCOUNT(fact_orders[order_id])\n)"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Cost Per Unit\nExpression: SUM(total_cost) / SUM(quantity_sold)",
+    "output": "Cost Per Unit = \nDIVIDE(\n    SUM(fact_sales[total_cost]),\n    SUM(fact_sales[quantity_sold])\n)"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Discount Rate\nExpression: SUM(discount_amount) / SUM(gross_revenue)",
+    "output": "Discount Rate = \nDIVIDE(\n    SUM(fact_sales[discount_amount]),\n    SUM(fact_sales[gross_revenue])\n)"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Revenue Per Customer\nExpression: SUM(revenue) / COUNT(DISTINCT customer_id)",
+    "output": "Revenue Per Customer = \nDIVIDE(\n    SUM(fact_sales[revenue]),\n    DISTINCTCOUNT(fact_sales[customer_id])\n)"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Inventory Turnover\nExpression: SUM(units_sold) / AVG(inventory_on_hand)",
+    "output": "Inventory Turnover = \nDIVIDE(\n    SUM(fact_sales[units_sold]),\n    AVERAGE(fact_inventory[inventory_on_hand])\n)"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Return Rate\nExpression: COUNT(DISTINCT returned_order_id) / COUNT(DISTINCT order_id)",
+    "output": "Return Rate = \nDIVIDE(\n    DISTINCTCOUNT(fact_returns[returned_order_id]),\n    DISTINCTCOUNT(fact_orders[order_id])\n)"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Net Margin Per Order\nExpression: (SUM(revenue) - SUM(cost)) / COUNT(DISTINCT order_id)",
+    "output": "Net Margin Per Order = \nDIVIDE(\n    SUM(fact_sales[revenue]) - SUM(fact_sales[cost]),\n    DISTINCTCOUNT(fact_sales[order_id])\n)"
+  },
+
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy cube SQL metric with a filter condition into a Power BI DAX measure.",
+    "input": "SELECT SUM(revenue) \nFROM fact_sales\nWHERE region = 'APAC' AND product_category = 'Electronics'",
+    "output": "APAC Electronics Revenue = \nCALCULATE(\n    SUM(fact_sales[revenue]),\n    fact_sales[region] = \"APAC\",\n    fact_sales[product_category] = \"Electronics\"\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy conditional metric into a Power BI DAX measure.",
+    "input": "Metric: High Value Orders\nExpression: SUM(revenue) WHERE order_value > 10000",
+    "output": "High Value Orders = \nCALCULATE(\n    SUM(fact_orders[revenue]),\n    FILTER(fact_orders, fact_orders[order_value] > 10000)\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy cube SQL metric with a filter condition into a Power BI DAX measure.",
+    "input": "SELECT COUNT(DISTINCT customer_id)\nFROM fact_sales\nWHERE customer_segment = 'Premium'",
+    "output": "Premium Customer Count = \nCALCULATE(\n    DISTINCTCOUNT(fact_sales[customer_id]),\n    fact_sales[customer_segment] = \"Premium\"\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy conditional metric into a Power BI DAX measure.",
+    "input": "Metric: Overdue Invoice Amount\nExpression: SUM(invoice_amount) WHERE due_date < TODAY AND payment_status = 'Unpaid'",
+    "output": "Overdue Invoice Amount = \nCALCULATE(\n    SUM(fact_invoices[invoice_amount]),\n    fact_invoices[due_date] < TODAY(),\n    fact_invoices[payment_status] = \"Unpaid\"\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy cube SQL metric with a filter condition into a Power BI DAX measure.",
+    "input": "SELECT SUM(revenue)\nFROM fact_sales\nWHERE product_category != 'Discontinued'",
+    "output": "Active Product Revenue = \nCALCULATE(\n    SUM(fact_sales[revenue]),\n    fact_sales[product_category] <> \"Discontinued\"\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy conditional metric into a Power BI DAX measure.",
+    "input": "Metric: Low Stock Items\nExpression: COUNT(product_id) WHERE quantity_on_hand < 50",
+    "output": "Low Stock Items = \nCALCULATE(\n    COUNT(fact_inventory[product_id]),\n    FILTER(fact_inventory, fact_inventory[quantity_on_hand] < 50)\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy cube SQL metric with a filter condition into a Power BI DAX measure.",
+    "input": "SELECT SUM(revenue)\nFROM fact_sales\nWHERE region IN ('APAC', 'EMEA')",
+    "output": "APAC EMEA Revenue = \nCALCULATE(\n    SUM(fact_sales[revenue]),\n    fact_sales[region] IN {\"APAC\", \"EMEA\"}\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy conditional metric into a Power BI DAX measure.",
+    "input": "Metric: New Customer Revenue\nExpression: SUM(revenue) WHERE customer_tenure_days <= 90",
+    "output": "New Customer Revenue = \nCALCULATE(\n    SUM(fact_sales[revenue]),\n    FILTER(fact_sales, fact_sales[customer_tenure_days] <= 90)\n)"
+  },
+
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: DIM_CUSTOMER\nAttributes: customer_id (PK), customer_name, customer_segment, region",
+    "output": "table DIM_CUSTOMER\n    column customer_id\n        dataType: int64\n        isKey: true\n\n    column customer_name\n        dataType: string\n\n    column customer_segment\n        dataType: string\n\n    column region\n        dataType: string"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: DIM_PRODUCT\nAttributes: product_id (PK), product_name, product_category, unit_cost",
+    "output": "table DIM_PRODUCT\n    column product_id\n        dataType: int64\n        isKey: true\n\n    column product_name\n        dataType: string\n\n    column product_category\n        dataType: string\n\n    column unit_cost\n        dataType: double"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: DIM_DATE\nAttributes: date (PK), year, month, quarter, day_of_week",
+    "output": "table DIM_DATE\n    column date\n        dataType: dateTime\n        isKey: true\n\n    column year\n        dataType: int64\n\n    column month\n        dataType: int64\n\n    column quarter\n        dataType: int64\n\n    column day_of_week\n        dataType: string"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: FACT_SALES\nAttributes: transaction_id (PK), customer_id, product_id, revenue, cost, quantity_sold",
+    "output": "table FACT_SALES\n    column transaction_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column product_id\n        dataType: int64\n\n    column revenue\n        dataType: double\n\n    column cost\n        dataType: double\n\n    column quantity_sold\n        dataType: int64"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: DIM_REGION\nAttributes: region_id (PK), region_name, country, sub_region",
+    "output": "table DIM_REGION\n    column region_id\n        dataType: int64\n        isKey: true\n\n    column region_name\n        dataType: string\n\n    column country\n        dataType: string\n\n    column sub_region\n        dataType: string"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: FACT_INVENTORY\nAttributes: inventory_id (PK), product_id, warehouse_id, quantity_on_hand, snapshot_date",
+    "output": "table FACT_INVENTORY\n    column inventory_id\n        dataType: int64\n        isKey: true\n\n    column product_id\n        dataType: int64\n\n    column warehouse_id\n        dataType: int64\n\n    column quantity_on_hand\n        dataType: int64\n\n    column snapshot_date\n        dataType: dateTime"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: DIM_EMPLOYEE\nAttributes: employee_id (PK), employee_name, department, hire_date",
+    "output": "table DIM_EMPLOYEE\n    column employee_id\n        dataType: int64\n        isKey: true\n\n    column employee_name\n        dataType: string\n\n    column department\n        dataType: string\n\n    column hire_date\n        dataType: dateTime"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: FACT_ORDERS\nAttributes: order_id (PK), customer_id, order_date, order_value, payment_status",
+    "output": "table FACT_ORDERS\n    column order_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column order_date\n        dataType: dateTime\n\n    column order_value\n        dataType: double\n\n    column payment_status\n        dataType: string"
+  },
+
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_sales.customer_id -> DIM_CUSTOMER.customer_id (many-to-one)",
+    "output": "relationship fact_sales_to_customer\n    fromColumn: fact_sales.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_sales.product_id -> DIM_PRODUCT.product_id (many-to-one)",
+    "output": "relationship fact_sales_to_product\n    fromColumn: fact_sales.product_id\n    toColumn: DIM_PRODUCT.product_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_orders.order_date -> DIM_DATE.date (many-to-one)",
+    "output": "relationship fact_orders_to_date\n    fromColumn: fact_orders.order_date\n    toColumn: DIM_DATE.date\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_inventory.warehouse_id -> DIM_WAREHOUSE.warehouse_id (many-to-one)",
+    "output": "relationship fact_inventory_to_warehouse\n    fromColumn: fact_inventory.warehouse_id\n    toColumn: DIM_WAREHOUSE.warehouse_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_sales.region_id -> DIM_REGION.region_id (many-to-one)",
+    "output": "relationship fact_sales_to_region\n    fromColumn: fact_sales.region_id\n    toColumn: DIM_REGION.region_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_orders.employee_id -> DIM_EMPLOYEE.employee_id (many-to-one)",
+    "output": "relationship fact_orders_to_employee\n    fromColumn: fact_orders.employee_id\n    toColumn: DIM_EMPLOYEE.employee_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_returns.order_id -> FACT_ORDERS.order_id (many-to-one)",
+    "output": "relationship fact_returns_to_orders\n    fromColumn: fact_returns.order_id\n    toColumn: FACT_ORDERS.order_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_inventory.product_id -> DIM_PRODUCT.product_id (many-to-one)",
+    "output": "relationship fact_inventory_to_product\n    fromColumn: fact_inventory.product_id\n    toColumn: DIM_PRODUCT.product_id\n    crossFilteringBehavior: singleDirection"
+  },
+
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Revenue YTD\nExpression: SUM(revenue) year-to-date based on order_date",
+    "output": "Revenue YTD = \nTOTALYTD(\n    SUM(fact_sales[revenue]),\n    DIM_DATE[date]\n)"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Revenue MoM Growth\nExpression: (Current Month Revenue - Prior Month Revenue) / Prior Month Revenue",
+    "output": "Revenue MoM Growth = \nVAR CurrentMonth = SUM(fact_sales[revenue])\nVAR PriorMonth = CALCULATE(SUM(fact_sales[revenue]), DATEADD(DIM_DATE[date], -1, MONTH))\nRETURN\nDIVIDE(CurrentMonth - PriorMonth, PriorMonth)"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Revenue Prior Year\nExpression: SUM(revenue) same period last year based on order_date",
+    "output": "Revenue Prior Year = \nCALCULATE(\n    SUM(fact_sales[revenue]),\n    SAMEPERIODLASTYEAR(DIM_DATE[date])\n)"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Revenue QTD\nExpression: SUM(revenue) quarter-to-date based on order_date",
+    "output": "Revenue QTD = \nTOTALQTD(\n    SUM(fact_sales[revenue]),\n    DIM_DATE[date]\n)"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Revenue YoY Growth\nExpression: (Current Year Revenue - Prior Year Revenue) / Prior Year Revenue",
+    "output": "Revenue YoY Growth = \nVAR CurrentYear = SUM(fact_sales[revenue])\nVAR PriorYear = CALCULATE(SUM(fact_sales[revenue]), SAMEPERIODLASTYEAR(DIM_DATE[date]))\nRETURN\nDIVIDE(CurrentYear - PriorYear, PriorYear)"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Rolling 3 Month Revenue\nExpression: SUM(revenue) over trailing 3 months based on order_date",
+    "output": "Rolling 3 Month Revenue = \nCALCULATE(\n    SUM(fact_sales[revenue]),\n    DATESINPERIOD(DIM_DATE[date], LASTDATE(DIM_DATE[date]), -3, MONTH)\n)"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Revenue MTD\nExpression: SUM(revenue) month-to-date based on order_date",
+    "output": "Revenue MTD = \nTOTALMTD(\n    SUM(fact_sales[revenue]),\n    DIM_DATE[date]\n)"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Prior Month Revenue\nExpression: SUM(revenue) shifted back 1 month based on order_date",
+    "output": "Prior Month Revenue = \nCALCULATE(\n    SUM(fact_sales[revenue]),\n    DATEADD(DIM_DATE[date], -1, MONTH)\n)"
+  }
+]

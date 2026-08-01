@@ -1,0 +1,110 @@
+[
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT MIN(fact_claims.claim_amount) AS min_claim_amount\nFROM fact_claims",
+    "output": "Min Claim Amount = MIN(fact_claims[claim_amount])"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT MAX(fact_web_sessions.session_duration) AS max_session_duration\nFROM fact_web_sessions",
+    "output": "Max Session Duration = MAX(fact_web_sessions[session_duration])"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy conditional metric into a Power BI DAX measure.",
+    "input": "Metric: Repeat Customers\nExpression: COUNT(DISTINCT customer_id) WHERE order_count > 1",
+    "output": "Repeat Customers = \nCALCULATE(\n    DISTINCTCOUNT(fact_sales[customer_id]),\n    FILTER(fact_sales, fact_sales[order_count] > 1)\n)"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: FACT_INVENTORY\nAttributes: inventory_id (PK), product_id, warehouse_id, quantity_on_hand, snapshot_date",
+    "output": "table FACT_INVENTORY\n    column inventory_id\n        dataType: int64\n        isKey: true\n\n    column product_id\n        dataType: int64\n\n    column warehouse_id\n        dataType: int64\n\n    column quantity_on_hand\n        dataType: int64\n\n    column snapshot_date\n        dataType: dateTime"
+  },
+  {
+    "category": "simple_aggregation",
+    "instruction": "Convert this MicroStrategy cube SQL metric into a Power BI DAX measure.",
+    "input": "SELECT MIN(fact_orders.order_value) AS min_order_value\nFROM fact_orders",
+    "output": "Min Order Value = MIN(fact_orders[order_value])"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Prior Quarter Claims\nExpression: SUM(claim_amount) shifted back 1 quarter based on claim_date",
+    "output": "Prior Quarter Claims = \nCALCULATE(\n    SUM(fact_claims[claim_amount]),\n    DATEADD(DIM_DATE[date], -1, QUARTER)\n)"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_sales.customer_id -> DIM_CUSTOMER.customer_id (many-to-one)",
+    "output": "relationship fact_sales_to_customer\n    fromColumn: fact_sales.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Avg Session Value\nExpression: SUM(session_revenue) / COUNT(DISTINCT session_id)",
+    "output": "Avg Session Value = \nDIVIDE(\n    SUM(fact_web_sessions[session_revenue]),\n    DISTINCTCOUNT(fact_web_sessions[session_id])\n)"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: FACT_SUPPORT_TICKETS\nAttributes: ticket_id (PK), customer_id, priority, status, created_date",
+    "output": "table FACT_SUPPORT_TICKETS\n    column ticket_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column priority\n        dataType: string\n\n    column status\n        dataType: string\n\n    column created_date\n        dataType: dateTime"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_web_sessions.customer_id -> DIM_CUSTOMER.customer_id (many-to-one)",
+    "output": "relationship fact_web_sessions_to_customer\n    fromColumn: fact_web_sessions.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Lead Conversion Rate\nExpression: COUNT(DISTINCT converted_lead_id) / COUNT(DISTINCT lead_id)",
+    "output": "Lead Conversion Rate = \nDIVIDE(\n    DISTINCTCOUNT(fact_leads[converted_lead_id]),\n    DISTINCTCOUNT(fact_leads[lead_id])\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy cube SQL metric with a filter condition into a Power BI DAX measure.",
+    "input": "SELECT COUNT(DISTINCT lead_id)\nFROM fact_leads\nWHERE lead_source NOT IN ('Referral', 'Direct')",
+    "output": "Non-Referral Leads = \nCALCULATE(\n    DISTINCTCOUNT(fact_leads[lead_id]),\n    NOT(fact_leads[lead_source] IN {\"Referral\", \"Direct\"})\n)"
+  },
+  {
+    "category": "table_definition",
+    "instruction": "Convert this MicroStrategy attribute/table definition into a Power BI TMDL table file.",
+    "input": "Table: DIM_CUSTOMER\nAttributes: customer_id (PK), customer_name, customer_segment, region",
+    "output": "table DIM_CUSTOMER\n    column customer_id\n        dataType: int64\n        isKey: true\n\n    column customer_name\n        dataType: string\n\n    column customer_segment\n        dataType: string\n\n    column region\n        dataType: string"
+  },
+  {
+    "category": "relationship",
+    "instruction": "Convert this MicroStrategy schema relationship into a Power BI TMDL relationship definition.",
+    "input": "fact_leads.converted_lead_id -> FACT_ORDERS.order_id (one-to-one)",
+    "output": "relationship fact_leads_to_orders\n    fromColumn: fact_leads.converted_lead_id\n    toColumn: FACT_ORDERS.order_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Refunds MTD\nExpression: SUM(refund_amount) month-to-date based on return_date",
+    "output": "Refunds MTD = \nTOTALMTD(\n    SUM(fact_returns[refund_amount]),\n    DIM_DATE[date]\n)"
+  },
+  {
+    "category": "filter_conditional",
+    "instruction": "Convert this MicroStrategy cube SQL metric with a filter condition into a Power BI DAX measure.",
+    "input": "SELECT SUM(revenue)\nFROM fact_sales\nWHERE region IN ('APAC', 'EMEA')",
+    "output": "APAC EMEA Revenue = \nCALCULATE(\n    SUM(fact_sales[revenue]),\n    fact_sales[region] IN {\"APAC\", \"EMEA\"}\n)"
+  },
+  {
+    "category": "calculated_member",
+    "instruction": "Convert this MicroStrategy calculated metric into a Power BI DAX measure.",
+    "input": "Metric: Avg Claim Processing Days\nExpression: SUM(processing_days) / COUNT(DISTINCT claim_id)",
+    "output": "Avg Claim Processing Days = \nDIVIDE(\n    SUM(fact_claims[processing_days]),\n    DISTINCTCOUNT(fact_claims[claim_id])\n)"
+  },
+  {
+    "category": "time_intelligence",
+    "instruction": "Convert this MicroStrategy time-intelligence metric into a Power BI DAX measure.",
+    "input": "Metric: Ticket Volume Prior Year\nExpression: COUNT(ticket_id) same period last year based on created_date",
+    "output": "Ticket Volume Prior Year = \nCALCULATE(\n    COUNT(fact_support_tickets[ticket_id]),\n    SAMEPERIODLASTYEAR(DIM_DATE[date])\n)"
+  }
+]
