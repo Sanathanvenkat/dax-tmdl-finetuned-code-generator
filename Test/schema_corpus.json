@@ -1,0 +1,264 @@
+[
+  {
+    "doc_id": "table_DIM_CUSTOMER",
+    "type": "table_schema",
+    "table_name": "DIM_CUSTOMER",
+    "text": "Table DIM_CUSTOMER has columns: customer_id (PK), customer_name, customer_segment, region.",
+    "tmdl_definition": "table DIM_CUSTOMER\n    column customer_id\n        dataType: int64\n        isKey: true\n\n    column customer_name\n        dataType: string\n\n    column customer_segment\n        dataType: string\n\n    column region\n        dataType: string"
+  },
+  {
+    "doc_id": "table_DIM_PRODUCT",
+    "type": "table_schema",
+    "table_name": "DIM_PRODUCT",
+    "text": "Table DIM_PRODUCT has columns: product_id (PK), product_name, product_category, unit_cost.",
+    "tmdl_definition": "table DIM_PRODUCT\n    column product_id\n        dataType: int64\n        isKey: true\n\n    column product_name\n        dataType: string\n\n    column product_category\n        dataType: string\n\n    column unit_cost\n        dataType: double"
+  },
+  {
+    "doc_id": "table_DIM_DATE",
+    "type": "table_schema",
+    "table_name": "DIM_DATE",
+    "text": "Table DIM_DATE has columns: date (PK), year, month, quarter, day_of_week.",
+    "tmdl_definition": "table DIM_DATE\n    column date\n        dataType: dateTime\n        isKey: true\n\n    column year\n        dataType: int64\n\n    column month\n        dataType: int64\n\n    column quarter\n        dataType: int64\n\n    column day_of_week\n        dataType: string"
+  },
+  {
+    "doc_id": "table_FACT_SALES",
+    "type": "table_schema",
+    "table_name": "FACT_SALES",
+    "text": "Table FACT_SALES has columns: transaction_id (PK), customer_id, product_id, revenue, cost, quantity_sold.",
+    "tmdl_definition": "table FACT_SALES\n    column transaction_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column product_id\n        dataType: int64\n\n    column revenue\n        dataType: double\n\n    column cost\n        dataType: double\n\n    column quantity_sold\n        dataType: int64"
+  },
+  {
+    "doc_id": "table_DIM_REGION",
+    "type": "table_schema",
+    "table_name": "DIM_REGION",
+    "text": "Table DIM_REGION has columns: region_id (PK), region_name, country, sub_region.",
+    "tmdl_definition": "table DIM_REGION\n    column region_id\n        dataType: int64\n        isKey: true\n\n    column region_name\n        dataType: string\n\n    column country\n        dataType: string\n\n    column sub_region\n        dataType: string"
+  },
+  {
+    "doc_id": "table_FACT_INVENTORY",
+    "type": "table_schema",
+    "table_name": "FACT_INVENTORY",
+    "text": "Table FACT_INVENTORY has columns: inventory_id (PK), product_id, warehouse_id, quantity_on_hand, snapshot_date.",
+    "tmdl_definition": "table FACT_INVENTORY\n    column inventory_id\n        dataType: int64\n        isKey: true\n\n    column product_id\n        dataType: int64\n\n    column warehouse_id\n        dataType: int64\n\n    column quantity_on_hand\n        dataType: int64\n\n    column snapshot_date\n        dataType: dateTime"
+  },
+  {
+    "doc_id": "table_DIM_EMPLOYEE",
+    "type": "table_schema",
+    "table_name": "DIM_EMPLOYEE",
+    "text": "Table DIM_EMPLOYEE has columns: employee_id (PK), employee_name, department, hire_date.",
+    "tmdl_definition": "table DIM_EMPLOYEE\n    column employee_id\n        dataType: int64\n        isKey: true\n\n    column employee_name\n        dataType: string\n\n    column department\n        dataType: string\n\n    column hire_date\n        dataType: dateTime"
+  },
+  {
+    "doc_id": "table_FACT_ORDERS",
+    "type": "table_schema",
+    "table_name": "FACT_ORDERS",
+    "text": "Table FACT_ORDERS has columns: order_id (PK), customer_id, order_date, order_value, payment_status.",
+    "tmdl_definition": "table FACT_ORDERS\n    column order_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column order_date\n        dataType: dateTime\n\n    column order_value\n        dataType: double\n\n    column payment_status\n        dataType: string"
+  },
+  {
+    "doc_id": "table_DIM_STORE",
+    "type": "table_schema",
+    "table_name": "DIM_STORE",
+    "text": "Table DIM_STORE has columns: store_id (PK), store_name, store_sqft, city, state.",
+    "tmdl_definition": "table DIM_STORE\n    column store_id\n        dataType: int64\n        isKey: true\n\n    column store_name\n        dataType: string\n\n    column store_sqft\n        dataType: int64\n\n    column city\n        dataType: string\n\n    column state\n        dataType: string"
+  },
+  {
+    "doc_id": "table_FACT_CLAIMS",
+    "type": "table_schema",
+    "table_name": "FACT_CLAIMS",
+    "text": "Table FACT_CLAIMS has columns: claim_id (PK), customer_id, claim_amount, claim_status, claim_type.",
+    "tmdl_definition": "table FACT_CLAIMS\n    column claim_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column claim_amount\n        dataType: double\n\n    column claim_status\n        dataType: string\n\n    column claim_type\n        dataType: string"
+  },
+  {
+    "doc_id": "table_DIM_EMPLOYEE_DEPT",
+    "type": "table_schema",
+    "table_name": "DIM_EMPLOYEE_DEPT",
+    "text": "Table DIM_EMPLOYEE_DEPT has columns: department_id (PK), department_name, cost_center.",
+    "tmdl_definition": "table DIM_EMPLOYEE_DEPT\n    column department_id\n        dataType: int64\n        isKey: true\n\n    column department_name\n        dataType: string\n\n    column cost_center\n        dataType: string"
+  },
+  {
+    "doc_id": "table_FACT_SUPPORT_TICKETS",
+    "type": "table_schema",
+    "table_name": "FACT_SUPPORT_TICKETS",
+    "text": "Table FACT_SUPPORT_TICKETS has columns: ticket_id (PK), customer_id, priority, status, created_date.",
+    "tmdl_definition": "table FACT_SUPPORT_TICKETS\n    column ticket_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column priority\n        dataType: string\n\n    column status\n        dataType: string\n\n    column created_date\n        dataType: dateTime"
+  },
+  {
+    "doc_id": "table_FACT_LEADS",
+    "type": "table_schema",
+    "table_name": "FACT_LEADS",
+    "text": "Table FACT_LEADS has columns: lead_id (PK), lead_source, converted_lead_id, created_date.",
+    "tmdl_definition": "table FACT_LEADS\n    column lead_id\n        dataType: int64\n        isKey: true\n\n    column lead_source\n        dataType: string\n\n    column converted_lead_id\n        dataType: int64\n\n    column created_date\n        dataType: dateTime"
+  },
+  {
+    "doc_id": "table_DIM_WAREHOUSE",
+    "type": "table_schema",
+    "table_name": "DIM_WAREHOUSE",
+    "text": "Table DIM_WAREHOUSE has columns: warehouse_id (PK), warehouse_name, region_id, capacity.",
+    "tmdl_definition": "table DIM_WAREHOUSE\n    column warehouse_id\n        dataType: int64\n        isKey: true\n\n    column warehouse_name\n        dataType: string\n\n    column region_id\n        dataType: int64\n\n    column capacity\n        dataType: int64"
+  },
+  {
+    "doc_id": "table_FACT_PAYROLL",
+    "type": "table_schema",
+    "table_name": "FACT_PAYROLL",
+    "text": "Table FACT_PAYROLL has columns: payroll_id (PK), employee_id, gross_pay, pay_period, employment_type.",
+    "tmdl_definition": "table FACT_PAYROLL\n    column payroll_id\n        dataType: int64\n        isKey: true\n\n    column employee_id\n        dataType: int64\n\n    column gross_pay\n        dataType: double\n\n    column pay_period\n        dataType: dateTime\n\n    column employment_type\n        dataType: string"
+  },
+  {
+    "doc_id": "table_FACT_WEB_SESSIONS",
+    "type": "table_schema",
+    "table_name": "FACT_WEB_SESSIONS",
+    "text": "Table FACT_WEB_SESSIONS has columns: session_id (PK), customer_id, session_duration, session_revenue, session_date.",
+    "tmdl_definition": "table FACT_WEB_SESSIONS\n    column session_id\n        dataType: int64\n        isKey: true\n\n    column customer_id\n        dataType: int64\n\n    column session_duration\n        dataType: int64\n\n    column session_revenue\n        dataType: double\n\n    column session_date\n        dataType: dateTime"
+  },
+  {
+    "doc_id": "table_FACT_RETURNS",
+    "type": "table_schema",
+    "table_name": "FACT_RETURNS",
+    "text": "Table FACT_RETURNS has columns: return_id (PK), order_id, refund_amount, return_reason, return_date.",
+    "tmdl_definition": "table FACT_RETURNS\n    column return_id\n        dataType: int64\n        isKey: true\n\n    column order_id\n        dataType: int64\n\n    column refund_amount\n        dataType: double\n\n    column return_reason\n        dataType: string\n\n    column return_date\n        dataType: dateTime"
+  },
+  {
+    "doc_id": "table_DIM_TERMINATION_REASON",
+    "type": "table_schema",
+    "table_name": "DIM_TERMINATION_REASON",
+    "text": "Table DIM_TERMINATION_REASON has columns: reason_id (PK), reason_description, is_voluntary.",
+    "tmdl_definition": "table DIM_TERMINATION_REASON\n    column reason_id\n        dataType: int64\n        isKey: true\n\n    column reason_description\n        dataType: string\n\n    column is_voluntary\n        dataType: boolean"
+  },
+  {
+    "doc_id": "rel_fact_sales_DIM_CUSTOMER",
+    "type": "relationship",
+    "from_table": "fact_sales",
+    "to_table": "DIM_CUSTOMER",
+    "text": "fact_sales relates to DIM_CUSTOMER via customer_id to customer_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_sales_to_customer\n    fromColumn: fact_sales.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_sales_DIM_PRODUCT",
+    "type": "relationship",
+    "from_table": "fact_sales",
+    "to_table": "DIM_PRODUCT",
+    "text": "fact_sales relates to DIM_PRODUCT via product_id to product_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_sales_to_product\n    fromColumn: fact_sales.product_id\n    toColumn: DIM_PRODUCT.product_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_orders_DIM_DATE",
+    "type": "relationship",
+    "from_table": "fact_orders",
+    "to_table": "DIM_DATE",
+    "text": "fact_orders relates to DIM_DATE via order_date to date, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_orders_to_date\n    fromColumn: fact_orders.order_date\n    toColumn: DIM_DATE.date\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_inventory_DIM_WAREHOUSE",
+    "type": "relationship",
+    "from_table": "fact_inventory",
+    "to_table": "DIM_WAREHOUSE",
+    "text": "fact_inventory relates to DIM_WAREHOUSE via warehouse_id to warehouse_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_inventory_to_warehouse\n    fromColumn: fact_inventory.warehouse_id\n    toColumn: DIM_WAREHOUSE.warehouse_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_sales_DIM_REGION",
+    "type": "relationship",
+    "from_table": "fact_sales",
+    "to_table": "DIM_REGION",
+    "text": "fact_sales relates to DIM_REGION via region_id to region_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_sales_to_region\n    fromColumn: fact_sales.region_id\n    toColumn: DIM_REGION.region_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_orders_DIM_EMPLOYEE",
+    "type": "relationship",
+    "from_table": "fact_orders",
+    "to_table": "DIM_EMPLOYEE",
+    "text": "fact_orders relates to DIM_EMPLOYEE via employee_id to employee_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_orders_to_employee\n    fromColumn: fact_orders.employee_id\n    toColumn: DIM_EMPLOYEE.employee_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_returns_FACT_ORDERS",
+    "type": "relationship",
+    "from_table": "fact_returns",
+    "to_table": "FACT_ORDERS",
+    "text": "fact_returns relates to FACT_ORDERS via order_id to order_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_returns_to_orders\n    fromColumn: fact_returns.order_id\n    toColumn: FACT_ORDERS.order_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_inventory_DIM_PRODUCT",
+    "type": "relationship",
+    "from_table": "fact_inventory",
+    "to_table": "DIM_PRODUCT",
+    "text": "fact_inventory relates to DIM_PRODUCT via product_id to product_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_inventory_to_product\n    fromColumn: fact_inventory.product_id\n    toColumn: DIM_PRODUCT.product_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_claims_DIM_CUSTOMER",
+    "type": "relationship",
+    "from_table": "fact_claims",
+    "to_table": "DIM_CUSTOMER",
+    "text": "fact_claims relates to DIM_CUSTOMER via customer_id to customer_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_claims_to_customer\n    fromColumn: fact_claims.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_support_tickets_DIM_CUSTOMER",
+    "type": "relationship",
+    "from_table": "fact_support_tickets",
+    "to_table": "DIM_CUSTOMER",
+    "text": "fact_support_tickets relates to DIM_CUSTOMER via customer_id to customer_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_support_tickets_to_customer\n    fromColumn: fact_support_tickets.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_payroll_DIM_EMPLOYEE",
+    "type": "relationship",
+    "from_table": "fact_payroll",
+    "to_table": "DIM_EMPLOYEE",
+    "text": "fact_payroll relates to DIM_EMPLOYEE via employee_id to employee_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_payroll_to_employee\n    fromColumn: fact_payroll.employee_id\n    toColumn: DIM_EMPLOYEE.employee_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_web_sessions_DIM_CUSTOMER",
+    "type": "relationship",
+    "from_table": "fact_web_sessions",
+    "to_table": "DIM_CUSTOMER",
+    "text": "fact_web_sessions relates to DIM_CUSTOMER via customer_id to customer_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship fact_web_sessions_to_customer\n    fromColumn: fact_web_sessions.customer_id\n    toColumn: DIM_CUSTOMER.customer_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_leads_FACT_ORDERS",
+    "type": "relationship",
+    "from_table": "fact_leads",
+    "to_table": "FACT_ORDERS",
+    "text": "fact_leads relates to FACT_ORDERS via converted_lead_id to order_id, cardinality one-to-one.",
+    "tmdl_definition": "relationship fact_leads_to_orders\n    fromColumn: fact_leads.converted_lead_id\n    toColumn: FACT_ORDERS.order_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_dim_employee_DIM_EMPLOYEE_DEPT",
+    "type": "relationship",
+    "from_table": "dim_employee",
+    "to_table": "DIM_EMPLOYEE_DEPT",
+    "text": "dim_employee relates to DIM_EMPLOYEE_DEPT via department_id to department_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship employee_to_department\n    fromColumn: dim_employee.department_id\n    toColumn: DIM_EMPLOYEE_DEPT.department_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_dim_warehouse_DIM_REGION",
+    "type": "relationship",
+    "from_table": "dim_warehouse",
+    "to_table": "DIM_REGION",
+    "text": "dim_warehouse relates to DIM_REGION via region_id to region_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship warehouse_to_region\n    fromColumn: dim_warehouse.region_id\n    toColumn: DIM_REGION.region_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_terminations_DIM_TERMINATION_REASON",
+    "type": "relationship",
+    "from_table": "fact_terminations",
+    "to_table": "DIM_TERMINATION_REASON",
+    "text": "fact_terminations relates to DIM_TERMINATION_REASON via reason_id to reason_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship terminations_to_reason\n    fromColumn: fact_terminations.reason_id\n    toColumn: DIM_TERMINATION_REASON.reason_id\n    crossFilteringBehavior: singleDirection"
+  },
+  {
+    "doc_id": "rel_fact_claims_DIM_CLAIM_TYPE",
+    "type": "relationship",
+    "from_table": "fact_claims",
+    "to_table": "DIM_CLAIM_TYPE",
+    "text": "fact_claims relates to DIM_CLAIM_TYPE via claim_type to claim_type_id, cardinality many-to-one.",
+    "tmdl_definition": "relationship claims_to_claim_type\n    fromColumn: fact_claims.claim_type\n    toColumn: DIM_CLAIM_TYPE.claim_type_id\n    crossFilteringBehavior: singleDirection"
+  }
+]
